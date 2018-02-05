@@ -2,8 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.65)
-LT_PREREQ([2.4.0])
-AC_INIT([htop],[2.0.2],[hisham@gobolinux.org])
+AC_INIT([htop],[2.1.0],[hisham@gobolinux.org])
 
 SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-$(date +%s)}"
 year=$(date -u -d "@$SOURCE_DATE_EPOCH" "+%Y" 2>/dev/null || date -u -r "$SOURCE_DATE_EPOCH" "+%Y" 2>/dev/null || date -u "+%Y")
@@ -25,8 +24,6 @@ AM_PROG_CC_C_O
 
 # Required by hwloc scripts
 AC_USE_SYSTEM_EXTENSIONS
-
-#LT_INIT([disable-shared static])
 
 # Checks for platform.
 # ----------------------------------------------------------------------
@@ -258,6 +255,18 @@ if test "x$enable_setuid" = xyes
 then
    AC_DEFINE(HAVE_SETUID_ENABLED, 1, [Define if setuid support should be enabled.])
 fi
+
+AC_ARG_ENABLE(delayacct, [AS_HELP_STRING([--enable-delayacct], [enable linux delay accounting])],, enable_delayacct="no")
+if test "x$enable_delayacct" = xyes
+then
+   PKG_PROG_PKG_CONFIG()
+   PKG_CHECK_MODULES(LIBNL3, libnl-3.0, [], [missing_libraries="$missing_libraries libnl-3"])
+   PKG_CHECK_MODULES(LIBNL3GENL, libnl-genl-3.0, [], [missing_libraries="$missing_libraries libnl-genl-3"])
+   CFLAGS+=" $LIBNL3_CFLAGS $LIBNL3GENL_CFLAGS"
+   LIBS+=" $LIBNL3_LIBS $LIBNL3GENL_LIBS"
+   AC_DEFINE(HAVE_DELAYACCT, 1, [Define if delay accounting support should be enabled.])
+fi
+
 
 # Bail out on errors.
 # ----------------------------------------------------------------------
