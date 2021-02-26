@@ -67,14 +67,14 @@ static HandlerResult CategoriesPanel_eventHandler(Panel* super, int ch) {
    HandlerResult result = IGNORED;
 
    int selected = Panel_getSelectedIndex(super);
-   
+
    switch (ch) {
       case 'k': ch = KEY_UP; break;
       case 'j': ch = KEY_DOWN; break;
       case 'h': ch = KEY_LEFT; break;
       case 'l': ch = KEY_RIGHT; break;
    }
-   
+
    switch (ch) {
       case EVENT_SET_SELECTED:
          result = HANDLED;
