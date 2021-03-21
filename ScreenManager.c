@@ -215,10 +215,10 @@ void ScreenManager_run(ScreenManager* this, Panel** lastFocus, int* lastKey) {
          continue;
       }
       switch (ch) {
-         case KEY_ALT('H'): ch = KEY_LEFT; break;
-         case KEY_ALT('J'): ch = KEY_DOWN; break;
-         case KEY_ALT('K'): ch = KEY_UP; break;
-         case KEY_ALT('L'): ch = KEY_RIGHT; break;
+         case 'h': case KEY_ALT('H'): ch = KEY_LEFT; break;
+         case 'j': case KEY_ALT('J'): ch = KEY_DOWN; break;
+         case 'k': case KEY_ALT('K'): ch = KEY_UP; break;
+         case 'l': case KEY_ALT('L'): ch = KEY_RIGHT; break;
       }
       redraw = true;
       if (Panel_eventHandlerFn(panelFocus)) {
