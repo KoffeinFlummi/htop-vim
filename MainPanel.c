@@ -50,7 +50,7 @@ static const char* MainPanel_getValue(Panel* this, int i) {
    return Process_getCommand(p);
 }
 
-static HandlerResult MainPanel_eventHandler(Panel* super, int ch) {
+HandlerResult MainPanel_eventHandler(Panel* super, int ch) {
    MainPanel* this = (MainPanel*) super;
 
    HandlerResult result = IGNORED;

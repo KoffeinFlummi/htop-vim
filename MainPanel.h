@@ -46,4 +46,6 @@ void MainPanel_setState(MainPanel* this, State* state);
 
 void MainPanel_delete(Object* object);
 
+HandlerResult MainPanel_eventHandler(Panel* super, int ch);
+
 #endif
