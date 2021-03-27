@@ -14,6 +14,7 @@ in the source distribution for its full text.
 
 #include "CRT.h"
 #include "FunctionBar.h"
+#include "MainPanel.h"
 #include "Object.h"
 #include "ProcessList.h"
 #include "ProvideCurses.h"
@@ -214,14 +215,16 @@ void ScreenManager_run(ScreenManager* this, Panel** lastFocus, int* lastKey) {
          redraw = false;
          continue;
       }
-      switch (ch) {
-         case 'h': case KEY_ALT('H'): ch = KEY_LEFT; break;
-         case 'j': case KEY_ALT('J'): ch = KEY_DOWN; break;
-         case 'k': case KEY_ALT('K'): ch = KEY_UP; break;
-         case 'l': case KEY_ALT('L'): ch = KEY_RIGHT; break;
-      }
       redraw = true;
       if (Panel_eventHandlerFn(panelFocus)) {
+         if (Panel_eventHandlerFn(panelFocus) != MainPanel_eventHandler) {
+            switch (ch) {
+               case 'h': case KEY_ALT('H'): ch = KEY_LEFT; break;
+               case 'j': case KEY_ALT('J'): ch = KEY_DOWN; break;
+               case 'k': case KEY_ALT('K'): ch = KEY_UP; break;
+               case 'l': case KEY_ALT('L'): ch = KEY_RIGHT; break;
+            }
+         }
          result = Panel_eventHandler(panelFocus, ch);
       }
       if (result & SYNTH_KEY) {
